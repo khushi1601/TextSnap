@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Summarization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            border: 2px double #999;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #333;
+            text-align: center;
+        }
+        
+        form {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        #summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        p {
+            line-height: 1.5;
+        }
+        
+        /* Watermark Style */
+        .watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            background-color: #000;
+            opacity: 0.8;
+        }
+        
+        /* Additional Styling for Watermark Letters */
+        .watermark span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark"></div>
+    <div class="container">
+        <h1>Welcome to TextSnap!</h1>
+        <h3>This tool will summarize your texts!</h3>
+        <form action="{{ url_for('summarize') }}" method="post">
+            <label for="url">Enter URL of the page you want to summarize text from:</label>
+            <input type="text" id="url" name="url" required>
+            <br><br>
+            <input type="submit" value="Summarize">
+        </form>
+        {% if summary %}
+        <div id="summary">
+            <h2>Summary:</h2>
+            <p>{{ summary }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Generate and position random letters in the watermark
+        var watermark = document.querySelector('.watermark');
+        var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        for (var i = 0; i < 500; i++) {
+            var letter = document.createElement('span');
+            letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+            letter.style.top = Math.random() * 100 + '%';
+            letter.style.left = Math.random() * 100 + '%';
+            watermark.appendChild(letter);
+        }
+    </script>
+</body>
+</html>
